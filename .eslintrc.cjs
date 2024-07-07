@@ -4,6 +4,7 @@ module.exports = {
     extends: [
         'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
+        'plugin:react/recommended',
         'plugin:react-hooks/recommended',
         'prettier',
         'plugin:prettier/recommended',
@@ -15,6 +16,5 @@ module.exports = {
         'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
         'react-compiler/react-compiler': 'error',
         '@typescript-eslint/no-explicit-any': 'error',
-        'no-console': 'warn',
     },
 };
