@@ -35,6 +35,10 @@ class Search extends React.Component<SearchProps, SearchState> {
         this.props.onSearch(this.state.query.toLocaleLowerCase().trim());
     }
 
+    handleErrorClick(){
+        throw new Error('custom test error')
+       }
+
     render(): React.ReactNode {
         return (
             <div className='serach-form-container'>
@@ -49,6 +53,7 @@ class Search extends React.Component<SearchProps, SearchState> {
                         onChange={this.handleInputChange}
                     />
                     <button type='submit'>Search</button>
+                    <button onClick={this.handleErrorClick}>Error</button>
                 </form>
             </div>
         );
