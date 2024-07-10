@@ -1,0 +1,41 @@
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+    min-height: 100vh;
+}
+
+header {
+    background-color: #ddd;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin: 20px 0;
+}
+
+button{
+    padding:10px 20px;
+    font-size: 1.5rem;
+    
+}
+
+.error-popup {
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #f50c0c;
+    border-radius: 8px;
+    color: #f50c0c;
+}
+
+@media screen and (max-width: 768px) {
+    .error-popup {
+        top: 70%;
+    }
+}
