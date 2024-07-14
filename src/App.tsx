@@ -1,56 +1,34 @@
-// App.tsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Search from './components/search/Search';
 import List from './components/list/List';
 import Pagination from './components/paginate/Pagination';
 import ErrorBoundary from './components/errorBoundary/ErrorBoundary';
 import { Character } from './models/models';
-
-// styles
-import './App.css';
 import LoadingSpinner from './components/loader/LoadingSpinner';
+import useLocalStorage from './hooks/useLocalStorage';
 
-interface AppState {
-    characters: Character[];
-    query: string;
-    page: number;
-    error: string | null;
-    totalPages: number;
-    loading: boolean;
-}
+import './App.css';
 
 interface AppProps {}
 
-class App extends React.Component<AppProps, AppState> {
-    constructor(props: AppProps) {
-        super(props);
+const App: React.FC<AppProps> = () => {
+    const [characters, setCharacters] = useState<Character[]>([]);
+    const [query, setQuery] = useLocalStorage('searchQuery', '');
+    const [page, setPage] = useLocalStorage('searchPage', '1');
+    const [error, setError] = useState<string | null>(null);
+    const [totalPages, setTotalPages] = useState<number>(1);
+    const [loading, setLoading] = useState<boolean>(false);
 
-        const savedQuery = localStorage.getItem('searchQuery') || '';
-        const savedPage = parseInt(localStorage.getItem('searchPage') || '1', 10);
-
-        this.state = {
-            characters: [],
-            query: savedQuery,
-            page: savedPage,
-            error: null,
-            totalPages: 1,
-            loading: false,
-        };
-
-        this.handleSearch = this.handleSearch.bind(this);
-        this.handlePageChange = this.handlePageChange.bind(this);
-    }
-
-    componentDidMount(): void {
-        if (this.state.query) {
-            this.fetchCharacters(this.state.query, this.state.page);
+    useEffect(() => {
+        if (query) {
+            fetchCharacters(query, parseInt(page, 10));
         } else {
-            this.fetchCharacters('', this.state.page);
+            fetchCharacters('', parseInt(page, 10));
         }
-    }
+    }, [query, page]);
 
-    fetchCharacters(query: string, page: number): void {
-        this.setState({ loading: true });
+    const fetchCharacters = (query: string, page: number): void => {
+        setLoading(true);
         const url = query
             ? `https://rickandmortyapi.com/api/character/?name=${query}&page=${page}`
             : `https://rickandmortyapi.com/api/character/?page=${page}`;
@@ -62,72 +40,62 @@ class App extends React.Component<AppProps, AppState> {
                 return res.json();
             })
             .then((data) => {
-                this.setState({
-                    characters: data.results,
-                    error: null,
-                    totalPages: data.info.pages,
-                    loading: false,
-                });
+                setCharacters(data.results);
+                setError(null);
+                setTotalPages(data.info.pages);
+                setLoading(false);
             })
             .catch((err) => {
                 console.log(err.message);
-
-                this.setState({
-                    characters: [],
-                    error: err.message,
-                    loading: false,
-                });
+                setCharacters([]);
+                setError(err.message);
+                setLoading(false);
             });
-    }
+    };
 
-    handleSearch(query: string): void {
-        localStorage.setItem('searchQuery', query);
-        localStorage.setItem('searchPage', '1');
-        this.setState({ query, page: 1, loading: true }, () => {
-            this.fetchCharacters(this.state.query, 1);
-        });
-    }
+    const handleSearch = (query: string): void => {
+        setQuery(query);
+        setPage('1');
+        setLoading(true);
+    };
 
-    handlePageChange(newPage: number): void {
-        localStorage.setItem('searchPage', newPage.toString());
-        this.setState({ page: newPage, loading: true }, () => {
-            this.fetchCharacters(this.state.query, this.state.page);
-        });
-    }
+    const handlePageChange = (newPage: number): void => {
+        setPage(newPage.toString());
+        setLoading(true);
+    };
 
-
-    render(): React.ReactNode {
-        return (
-            <>
-                <header>
-                    <h1>Characters</h1>
-                    <Search onSearch={this.handleSearch} />
-                </header>
-                <main>
-                    <ErrorBoundary>
-                        {this.state.loading ? (
-                            <LoadingSpinner />
+    return (
+        <>
+            <header>
+                <h1>Characters</h1>
+                <ErrorBoundary>
+                    <Search onSearch={handleSearch} />
+                </ErrorBoundary>
+            </header>
+            <main>
+                {loading ? (
+                    <LoadingSpinner />
+                ) : (
+                    <>
+                        {error ? (
+                            <div className='error-popup'>{error}</div>
                         ) : (
                             <>
-                                {this.state.error ? (
-                                    <div className='error-popup'>{this.state.error}</div>
-                                ) : (
-                                    <>
-                                        <List characters={this.state.characters} />
-                                        <Pagination
-                                            currentPage={this.state.page}
-                                            totalPages={this.state.totalPages}
-                                            onPageChange={this.handlePageChange}
-                                        />
-                                    </>
-                                )}
+                                <ErrorBoundary>
+                                    <List characters={characters} />
+                                    <Pagination
+                                        currentPage={parseInt(page, 10)} // Convert page to number
+                                        totalPages={totalPages}
+                                        onPageChange={handlePageChange}
+                                    />
+                                </ErrorBoundary>
                             </>
                         )}
-                    </ErrorBoundary>
-                </main>
-            </>
-        );
-    }
-}
+                    </>
+                )}
+            </main>
+        </>
+    );
+};
 
 export default App;

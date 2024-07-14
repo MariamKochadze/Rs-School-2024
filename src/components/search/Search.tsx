@@ -1,62 +1,44 @@
 import React, { ChangeEvent, FormEvent } from 'react';
+import useLocalStorage from '../../hooks/useLocalStorage';
+import Button from '../button/Button';
+import ErrorButton from '../erroButton/ErrorButton';
 
-// styles
 import './Search.css';
 
 interface SearchProps {
     onSearch: (query: string) => void;
 }
 
-interface SearchState {
-    query: string;
-}
+const Search: React.FC<SearchProps> = ({ onSearch }) => {
+    const [query, setQuery] = useLocalStorage('searchQuery', '');
 
-class Search extends React.Component<SearchProps, SearchState> {
-    constructor(props: SearchProps) {
-        super(props);
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setQuery(event.target.value);
+    };
 
-        const savedQuery = localStorage.getItem('searchQuery') || '';
-
-        this.state = {
-            query: savedQuery,
-        };
-
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleInputChange(event: ChangeEvent<HTMLInputElement>) {
-        this.setState({ query: event.target.value });
-    }
-
-    handleSubmit(event: FormEvent<HTMLFormElement>) {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        localStorage.setItem('searchQuery', this.state.query);
-        this.props.onSearch(this.state.query.toLocaleLowerCase().trim());
-    }
+        localStorage.setItem('searchQuery', query);
+        onSearch(query.toLocaleLowerCase().trim());
+    };
 
-    handleErrorClick(){
-        throw new Error('custom test error')
-       }
+    return (
+        <div className='serach-form-container'>
+            <form
+                className='search-form'
+                onSubmit={handleSubmit}
+            >
+                <input
+                    type='text'
+                    placeholder='Search characters'
+                    value={query}
+                    onChange={handleInputChange}
+                />
+                <Button type='submit'>Search</Button>
+                <ErrorButton />
+            </form>
+        </div>
+    );
+};
 
-    render(): React.ReactNode {
-        return (
-            <div className='serach-form-container'>
-                <form
-                    className='search-form'
-                    onSubmit={this.handleSubmit}
-                >
-                    <input
-                        type='text'
-                        placeholder='Search characters'
-                        value={this.state.query}
-                        onChange={this.handleInputChange}
-                    />
-                    <button type='submit'>Search</button>
-                    <button onClick={this.handleErrorClick}>Error</button>
-                </form>
-            </div>
-        );
-    }
-}
 export default Search;

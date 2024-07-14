@@ -1,6 +1,6 @@
 import React from 'react';
+import Button from '../button/Button'; // Adjust the path based on your project structure
 
-// styles
 import './Pagination.css';
 
 interface PaginationProps {
@@ -9,43 +9,38 @@ interface PaginationProps {
     onPageChange: (newPage: number) => void;
 }
 
-class Pagination extends React.Component<PaginationProps> {
-    handlePrevious = () => {
-        const { currentPage, onPageChange } = this.props;
+const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
+    const handlePrevious = () => {
         if (currentPage > 1) {
             onPageChange(currentPage - 1);
         }
     };
 
-    handleNext = () => {
-        const { currentPage, totalPages, onPageChange } = this.props;
+    const handleNext = () => {
         if (currentPage < totalPages) {
             onPageChange(currentPage + 1);
         }
     };
 
-    render(): React.ReactNode {
-        const { currentPage, totalPages } = this.props;
-        return (
-            <div className='pagination'>
-                <button
-                    onClick={this.handlePrevious}
-                    disabled={currentPage === 1}
-                >
-                    Previous
-                </button>
-                <span>
-                    Page {currentPage} of {totalPages}
-                </span>
-                <button
-                    onClick={this.handleNext}
-                    disabled={currentPage === totalPages}
-                >
-                    Next
-                </button>
-            </div>
-        );
-    }
-}
+    return (
+        <div className='pagination'>
+            <Button
+                onClick={handlePrevious}
+                disabled={currentPage === 1}
+            >
+                Previous
+            </Button>
+            <span>
+                Page {currentPage} of {totalPages}
+            </span>
+            <Button
+                onClick={handleNext}
+                disabled={currentPage === totalPages}
+            >
+                Next
+            </Button>
+        </div>
+    );
+};
 
 export default Pagination;
