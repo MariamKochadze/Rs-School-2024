@@ -1,0 +1,15 @@
+.serach-form-container {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.search-form input {
+    width: 70%;
+    padding: 8px;
+    font-size: 2rem;
+}
+
+.search-form button {
+    font-size: 2rem;
+    padding: 8px 10px;
+}

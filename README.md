@@ -1,1 +1,3 @@
-# Rs School 2024
+# Characters
+
+## Deploy Link: [https://characters-search.netlify.app/](https://characters-search.netlify.app/)
