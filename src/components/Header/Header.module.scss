@@ -1,0 +1,23 @@
+.header {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  background: #6e6969;
+  padding: 20px 0;
+}
+
+.header-container {
+  @extend %container;
+  @include flex(space-around, center, null, 30px);
+  backdrop-filter: blur(12.5px);
+}
+
+.logo {
+  width: 150px;
+  color: #33dfe8;
+  font-size: 2rem;
+}
+
+.logo-link {
+  text-decoration: none;
+}

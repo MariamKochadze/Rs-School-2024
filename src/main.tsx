@@ -1,18 +1,22 @@
+import { ThemeProvider } from '@contexts/themeProvider.tsx';
+import { Router } from '@router/router.tsx';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import App from './App.tsx';
-import NotFound from './components/notFound/NotFound.tsx';
+import { Provider } from 'react-redux';
+import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary.tsx';
+import { store } from './store/store.ts';
+import './styles/index.scss';
 
-const router = createBrowserRouter([
-    {
-        path: '/',
-        element: <App />,
-    },
-    {
-        path: '*',
-        element: <NotFound />,
-    },
-]);
+const root = document.getElementById('root') as HTMLElement;
 
-ReactDOM.createRoot(document.getElementById('root')!).render(<RouterProvider router={router} />);
+ReactDOM.createRoot(root).render(
+  <React.StrictMode>
+    <ErrorBoundary>
+      <Provider store={store}>
+        <ThemeProvider>
+          <Router />
+        </ThemeProvider>
+      </Provider>
+    </ErrorBoundary>
+  </React.StrictMode>
+);

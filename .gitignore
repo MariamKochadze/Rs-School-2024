@@ -11,10 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
-coverage
 
 # Editor directories and files
-.vscode/*
 !.vscode/extensions.json
 .idea
 .DS_Store
@@ -23,3 +21,4 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+coverage

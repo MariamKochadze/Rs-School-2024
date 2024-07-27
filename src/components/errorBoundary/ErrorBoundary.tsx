@@ -1,28 +1,49 @@
-import React from 'react';
+import { Component, ErrorInfo, ReactNode } from 'react';
+import styles from './ErrorBoundary.module.scss';
 
-interface Props {
-    children: React.ReactNode;
+interface ErrorBoundaryProps {
+  children: ReactNode;
 }
 
-export default class ErrorBoundary extends React.Component<Props> {
-    state: {
-        errorMessage: string;
-    } = {
-        errorMessage: '',
-    };
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
 
-    static getDerivedStateFromError(error: Error) {
-        return { errorMessage: error.toString() };
-    }
+export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
 
-    componentDidCatch(error: Error) {
-        console.error(error);
-    }
+  static getDerivedStateFromError(): ErrorBoundaryState {
+    return { hasError: true };
+  }
 
-    render() {
-        if (this.state.errorMessage) {
-            return <h1>{this.state.errorMessage}</h1>;
-        }
-        return this.props.children;
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('LOG: This error was caught by Error Boundary', error, errorInfo);
+  }
+
+  reload = () => {
+    window.location.reload();
+  };
+
+  render(): ReactNode {
+    const { hasError } = this.state;
+    const { children } = this.props;
+    if (hasError) {
+      return (
+        <div className={styles.errorPage}>
+          <div className={styles.errorContainer}>
+            <div className={styles.errorContent}>
+              <h2 className={styles.errorHeading}>Something went wrong.</h2>
+              <button type="button" className={styles.errorButton} onClick={this.reload}>
+                Reload
+              </button>
+            </div>
+          </div>
+        </div>
+      );
     }
+    return children;
+  }
 }

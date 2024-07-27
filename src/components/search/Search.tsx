@@ -1,44 +1,25 @@
-import React, { ChangeEvent, FormEvent } from 'react';
-import useLocalStorage from '../../hooks/useLocalStorage';
-import Button from '../button/Button';
-import ErrorButton from '../erroButton/ErrorButton';
+import { useSearchForm } from '@hooks/useSearchForm';
+import { useRef } from 'react';
+import styles from './Search.module.scss';
 
-import './Search.css';
+export const Search = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { searchValue, handleInputChange, handleSubmit } = useSearchForm(inputRef);
 
-interface SearchProps {
-    onSearch: (query: string) => void;
-}
-
-const Search: React.FC<SearchProps> = ({ onSearch }) => {
-    const [query, setQuery] = useLocalStorage('searchQuery', '');
-
-    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setQuery(event.target.value);
-    };
-
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        localStorage.setItem('searchQuery', query);
-        onSearch(query.toLocaleLowerCase().trim());
-    };
-
-    return (
-        <div className='serach-form-container'>
-            <form
-                className='search-form'
-                onSubmit={handleSubmit}
-            >
-                <input
-                    type='text'
-                    placeholder='Search characters'
-                    value={query}
-                    onChange={handleInputChange}
-                />
-                <Button type='submit'>Search</Button>
-                <ErrorButton />
-            </form>
-        </div>
-    );
+  return (
+    <div className={styles.searchContainer}>
+      <form noValidate method="" className={styles.search} onSubmit={handleSubmit}>
+        <input
+          ref={inputRef}
+          className={styles.searchInput}
+          required
+          type="text"
+          placeholder="Search"
+          value={searchValue}
+          onChange={handleInputChange}
+        />
+        <button type="submit" className={styles.searchIcon} aria-label="search button" />
+      </form>
+    </div>
+  );
 };
-
-export default Search;
