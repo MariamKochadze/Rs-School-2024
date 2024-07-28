@@ -3,7 +3,7 @@ import { Router } from '@router/router.tsx';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary.tsx';
+import { ErrorBoundary } from './components/errorBoundary/ErrorBoundary.tsx';
 import { store } from './store/store.ts';
 import './styles/index.scss';
 

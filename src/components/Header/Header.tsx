@@ -1,5 +1,5 @@
 import { ErrorButton } from '@components/ErrorButton/ErrorButton';
-import { Search } from '@components/Search/Search';
+import { Search } from '@components/search/Search';
 import { ThemeSwitcher } from '@components/ThemeSwitcher/ThemeSwitcher';
 import { Link } from 'react-router-dom';
 import styles from './Header.module.scss';
