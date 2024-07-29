@@ -1,4 +1,4 @@
-import { ErrorBoundary } from '@components/ErrorBoundary/ErrorBoundary.tsx';
+import { ErrorBoundary } from '@components/errorBoundary/ErrorBoundary.tsx';
 import { ThemeProvider } from '@contexts/themeProvider.tsx';
 import { Router } from '@router/router.tsx';
 import React from 'react';

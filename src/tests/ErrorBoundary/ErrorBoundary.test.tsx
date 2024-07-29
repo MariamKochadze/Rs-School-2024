@@ -1,4 +1,4 @@
-import { ErrorBoundary } from '@components/ErrorBoundary/ErrorBoundary';
+import { ErrorBoundary } from '@components/errorBoundary/ErrorBoundary';
 import '@testing-library/jest-dom';
 import { act, render, screen } from '@testing-library/react';
 import { vi } from 'vitest';

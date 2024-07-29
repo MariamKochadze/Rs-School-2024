@@ -1,4 +1,4 @@
-import { Search } from '@components/Search/Search';
+import { Search } from '@components/search/Search';
 import { useLocalStorage } from '@hooks/useLocalStorage';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
