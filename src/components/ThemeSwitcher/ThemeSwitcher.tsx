@@ -9,7 +9,7 @@ export const ThemeSwitcher = () => {
   };
 
   return (
-    <div className={styles.switcher}>
+    <div className={styles.switcher} data-testid="switcher">
       <label className={styles.switcherLabel} htmlFor="theme-switcher">
         <input
           type="checkbox"

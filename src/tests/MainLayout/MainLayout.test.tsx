@@ -14,5 +14,8 @@ describe('MainLayout', () => {
 
     const errorButton = screen.getByText('Error');
     expect(errorButton).toBeInTheDocument();
+
+    const themeSwither = screen.getByTestId('switcher');
+    expect(themeSwither).toBeInTheDocument();
   });
 });

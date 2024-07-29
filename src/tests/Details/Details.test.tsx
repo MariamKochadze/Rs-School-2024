@@ -41,6 +41,12 @@ describe('Details Component', () => {
 
     const birthYear = await screen.findByText('Male');
     expect(birthYear).toBeInTheDocument();
+
+    const status = await screen.findByText('Alive');
+    expect(status).toBeInTheDocument();
+
+    const gender = await screen.findByText('Gender');
+    expect(gender).toBeInTheDocument();
   });
 
   it('Ensure that clicking the close button hides the component.', async () => {

@@ -53,6 +53,9 @@ describe('CharacterItem rendering', () => {
 
     const characterName = await screen.findByText('Morty Smith');
     expect(characterName).toBeInTheDocument();
+
+    const characterGender = await screen.findByText('Male');
+    expect(characterGender).toBeInTheDocument();
   });
 
   it('Validate that clicking on a card opens a detailed card component;', async () => {

@@ -12,5 +12,7 @@ describe('MainLayout', () => {
     );
 
     expect(screen.getByText('Back to Home')).toBeInTheDocument();
+
+    expect(screen.getByText('Page was not found!')).toBeInTheDocument();
   });
 });
