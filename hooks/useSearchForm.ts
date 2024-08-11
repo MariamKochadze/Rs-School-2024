@@ -1,4 +1,6 @@
-import { useRouter } from 'next/router';
+'use client';
+
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useLocalStorage } from './useLocalStorage';
 
@@ -6,6 +8,8 @@ export const useSearchForm = (inputRef: React.RefObject<HTMLInputElement>) => {
   const router = useRouter();
   const { getStorage, setStorage } = useLocalStorage();
   const [searchValue, setSearchValue] = useState<string>(getStorage() || '');
+  const searchParams = useSearchParams();
+  const details = searchParams && searchParams.get('details');
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -19,18 +23,27 @@ export const useSearchForm = (inputRef: React.RefObject<HTMLInputElement>) => {
     }
 
     setStorage(searchValue);
-    const newQuery = { page: '1', query: searchValue, ...(router.query.details && { details: router.query.details }) };
-    router.push({ pathname: router.pathname, query: newQuery });
+
+    const newQuery = new URLSearchParams({
+      page: '1',
+      query: searchValue,
+      ...(details && { details }),
+    }).toString();
+
+    router.push(`?${newQuery}`);
   };
 
   useEffect(() => {
-    if (router.query.query !== getStorage()) {
-      const newQuery = {
-        page: '1',
-        query: getStorage(),
-        ...(router.query.details && { details: router.query.details }),
-      };
-      router.push({ pathname: router.pathname, query: newQuery });
+    const params = new URLSearchParams(searchParams?.toString());
+
+    if ((params && params.get('search')) !== getStorage()) {
+      params.set('query', searchValue);
+
+      if (!params.get('page')) {
+        params.set('page', '1');
+      }
+
+      router.push(`?${params.toString()}`);
     }
     // eslint-disable-next-line react-compiler/react-compiler
     // eslint-disable-next-line react-hooks/exhaustive-deps

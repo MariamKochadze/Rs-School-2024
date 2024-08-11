@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { CharacterItem } from '@components/CharacterItem/CharacterItem';
 import { useHandleDetails } from '@hooks/useHandleDetails';

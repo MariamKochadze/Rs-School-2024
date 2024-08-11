@@ -1,14 +1,20 @@
 export interface Character {
-  id: string;
   name: string;
-  status: string;
-  species: string;
-  type: string;
+  height: string;
+  mass: string;
+  hair_color: string;
+  skin_color: string;
+  eye_color: string;
+  birth_year: string;
   gender: string;
-  image: string;
-  episode: string[];
-  url: string;
+  homeworld: string;
+  films: string[];
+  species: string[];
+  vehicles: string[];
+  starships: string[];
   created: string;
+  edited: string;
+  url: string;
 }
 
 export interface CharacterWithId extends Character {
@@ -30,6 +36,23 @@ export interface PaginatedCharacters extends PaginatedResponse<Character> {}
 export interface PaginatedCharactersWithId extends PaginatedResponse<CharacterWithId> {}
 export interface PaginatedCharactersWithFavorites extends PaginatedResponse<CharacterWithFavorite> {}
 
+export interface Planet {
+  climate: string;
+  created: string;
+  diameter: string;
+  edited: string;
+  films: string[];
+  gravity: string;
+  name: string;
+  orbital_period: string;
+  population: string;
+  residents: string[];
+  rotation_period: string;
+  surface_water: string;
+  terrain: string;
+  url: string;
+}
+
 export interface Film {
   characters: string[];
   created: string;
@@ -45,9 +68,6 @@ export interface Film {
   title: string;
   url: string;
   vehicles: string[];
-  name: string;
-  id: string;
-  episode: string;
 }
 
 export interface PaginatedFilms extends PaginatedResponse<Film> {}

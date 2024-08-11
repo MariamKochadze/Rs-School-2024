@@ -21,13 +21,20 @@
       "@store/*": ["store/*"],
       "@styles/*": ["styles/*"],
       "@public/*": ["public/*"],
-      "@testSetup/*": ["testSetup/*"]
+      "@testSetup/*": ["testSetup/*"],
+      "@app/*": ["app/*"]
     },
     "strict": false,
     "incremental": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "strictNullChecks": true
   },
-  "include": ["pages", "next-env.d.ts", "**/*.ts", "**/*.tsx", "**/**/*.ts", "**/**/*.tsx"],
+  "include": ["pages", "next-env.d.ts", "**/*.ts", "**/*.tsx", "**/**/*.ts", "**/**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

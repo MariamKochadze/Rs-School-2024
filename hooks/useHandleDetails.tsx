@@ -1,13 +1,16 @@
-import { useRouter } from 'next/router';
+'use client';
+
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export const useHandleDetails = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const closeDetails = () => {
-    const newQuery = { ...router.query };
-    delete newQuery.details;
+    const params = new URLSearchParams(searchParams?.toString());
+    params.delete('details');
 
-    router.push({ pathname: router.pathname, query: newQuery });
+    router.push(`?${params.toString()}`);
   };
 
   const openDetails = (
@@ -16,10 +19,11 @@ export const useHandleDetails = () => {
   ) => {
     e.stopPropagation();
 
-    const newQuery = { ...router.query };
-    newQuery.details = characterId;
+    const params = new URLSearchParams(searchParams?.toString());
 
-    router.push({ pathname: router.pathname, query: newQuery });
+    params.set('details', characterId);
+
+    router.push(`?${params.toString()}`);
   };
 
   return { closeDetails, openDetails };
