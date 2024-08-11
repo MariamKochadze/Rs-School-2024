@@ -1,0 +1,5 @@
+{
+  "./app/**/*": "npm run format",
+  "./app/**/*.{css,scss}": "npm run stylelint",
+  "./app/**/*.{tsx,jsx,ts}": "npm run lint"
+}
