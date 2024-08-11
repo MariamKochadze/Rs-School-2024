@@ -11,8 +11,3 @@
 *.jpeg
 *.gif
 /node_modules
-.next
-coverage/
-*.html
-*.json
-dist/

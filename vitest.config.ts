@@ -1,37 +1,40 @@
+import { vitePlugin as remix } from '@remix-run/dev';
 import react from '@vitejs/plugin-react';
-import { join } from 'path';
+import { loadEnv } from 'vite';
+import svgr from 'vite-plugin-svgr';
+import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   server: {
     open: true,
   },
-  plugins: [react()],
+  plugins: [
+    !process.env.VITEST
+      ? remix({
+          appDirectory: 'app',
+        })
+      : react(),
+    tsconfigPaths(),
+    svgr(),
+  ],
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: './testSetup/setupTests.ts',
+    setupFiles: './app/testSetup/setupTests.ts',
     coverage: {
       provider: 'v8',
-      exclude: ['**/.eslintrc.cjs', 'vitest.config.ts', 'next.config.js', '.next', 'dist', '**/*.test.{js,jsx,ts,tsx}'],
+      exclude: [
+        '**/.eslintrc.cjs',
+        'vite.config.ts',
+        'vitest.config.ts',
+        'dist',
+        '.next',
+        'app/entry.client.tsx',
+        'app/entry.server.tsx',
+        'app/vite-env.d.ts',
+      ],
     },
-    alias: {
-      '@components': join(__dirname, 'components'),
-      '@contexts': join(__dirname, 'contexts'),
-      '@utils': join(__dirname, 'utils'),
-      '@pages': join(__dirname, 'pages'),
-      '@models': join(__dirname, 'models'),
-      '@hooks': join(__dirname, 'hooks'),
-      '@store': join(__dirname, 'store'),
-      '@styles': join(__dirname, 'styles'),
-      '@public': join(__dirname, 'public'),
-      '@testSetup': join(__dirname, 'testSetup'),
-      '@app': join(__dirname, 'app'),
-    },
-  },
-  resolve: {
-    alias: {
-      '@public/icons/heart.svg': join(__dirname, 'testSetup/svgMock.js'),
-    },
+    env: loadEnv('test', process.cwd(), ''),
   },
 });
