@@ -1,1 +1,1 @@
-# Rs School 2024
+# React + TypeScript + Vite
