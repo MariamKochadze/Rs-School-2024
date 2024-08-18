@@ -1,0 +1,15 @@
+.selectField {
+  margin-bottom: 1rem;
+}
+
+.selectField select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.error {
+  color: red;
+  font-size: 0.875rem;
+}
