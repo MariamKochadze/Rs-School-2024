@@ -1,1 +1,3 @@
-export const ReactHookFormPage = () => <h1>This is react hook form page.</h1>;
+import { ReactHookForm } from '@components/ReactHookForm/ReactHookForm.component';
+
+export const ReactHookFormPage = () => <ReactHookForm />;

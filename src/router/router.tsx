@@ -1,7 +1,7 @@
 import { MainLayout } from '@components/MainLayout/MainLayout.component';
+import { ReactHookForm } from '@components/ReactHookForm/ReactHookForm.component';
 import { HomePage } from '@pages/home/Home.page';
 import { NotFoundPage } from '@pages/notFound/NotFound.page';
-import { ReactHookFormPage } from '@pages/reactHookForm/ReactHookForm.page';
 import { UncontrolledFormPage } from '@pages/uncontrolledForm/UncontrolledForm.page';
 import { createBrowserRouter, RouteObject } from 'react-router-dom';
 import { AppRoutes } from './routes';
@@ -17,7 +17,7 @@ export const routes: RouteObject[] = [
       },
       {
         path: AppRoutes.REACT_HOOK_FORM_PAGE,
-        element: <ReactHookFormPage />,
+        element: <ReactHookForm />,
       },
       {
         path: AppRoutes.UNCONTROLLED_FORM_PAGE,

@@ -1,0 +1,23 @@
+.formGroup {
+  margin-bottom: 1rem;
+}
+
+.inputGroup,
+.fileGroup,
+.radioGroup,
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroup input,
+.fileGroup input,
+.radioGroup input,
+.checkboxGroup input {
+  margin-bottom: 0.5rem;
+}
+
+.error {
+  color: red;
+  font-size: 0.875rem;
+}

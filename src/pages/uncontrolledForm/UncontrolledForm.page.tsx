@@ -1,1 +1,3 @@
-export const UncontrolledFormPage = () => <h1>This is uncotrolled form page.</h1>;
+import { UncontrolledForm } from '@components/UncontrolledForm/UncontrolledForm.component';
+
+export const UncontrolledFormPage = () => <UncontrolledForm />;
